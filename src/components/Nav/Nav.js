@@ -1,17 +1,18 @@
 import './Nav.css'
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { useEffect, useState } from 'react';
+import WindowStore from '../../store/WindowStore';
 
 const Nav = ({user})=>{
 
     const logoPath = `${process.env.PUBLIC_URL}/logo.svg`
-
+    
     return (
         <div className='nav__container'>
             
             <Logo logoPath = {logoPath}/>
-
-            <AuthBanner/>
+            
+            <AuthBanner user={user}/>
 
         </div>
     )
@@ -29,18 +30,6 @@ const Logo = ({logoPath}) => {
 
 const AuthBanner = ({user})=>{
 
-    // const [width, setWidth] = useState(0)
-
-    // useEffect(()=>{
-    //     setWidth(window.innerWidth)
-    // }, [window.innerWidth])
-
-    // console.log(window.innerWidth)
-
-    // if (width<600){
-    //     return <UnfoldMoreIcon/>
-    // }
-
     if (user){
         return (
             <ul className='nav__banner'>
@@ -57,5 +46,6 @@ const AuthBanner = ({user})=>{
         )
     }
 }
+
 
 export default Nav;

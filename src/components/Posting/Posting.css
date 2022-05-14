@@ -134,7 +134,13 @@
     background-color: inherit;
 }
 
+.posting__comment {
+    display: flex;
+}
+
+
 .posting__comment__button:hover {
     color: orange;
     border-color: orange;
 }
+

@@ -3,9 +3,9 @@ import HandleDB from './api/HandleDB';
 import UserStore from './store/UserStore';
 import { Home } from '@mui/icons-material';
 import Nav from './components/Nav/Nav';
-import Posting from './components/Posting/Posting';
 import { useEffect, useState } from 'react';
 import WindowStore from './store/WindowStore'
+import Register from './components/Register/Register';
 
 const App = () => {
 
@@ -24,9 +24,9 @@ const App = () => {
   return (
     <div className="App">
       <Nav/>
-      <div>
-        <Posting/>
-      </div>
+
+      <Register/>
+    
     </div>
   );
 }
