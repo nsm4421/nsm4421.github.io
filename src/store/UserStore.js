@@ -1,11 +1,7 @@
 import create from 'zustand';
 
 const UserStore = create((set)=>({
-    user : {
-      name : null,
-      thumbNail : null,
-      info : null,
-    },
+    user : {},
     setUser(u){set(()=>({user:u}))}
 }))
 

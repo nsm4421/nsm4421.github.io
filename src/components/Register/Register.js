@@ -2,49 +2,59 @@ import './Register.css'
 import { useEffect, useState } from 'react';
 import RegisterBox from './RegisterBox'
 import ValidateRegister from './ValidateRegister'
-import { Alert } from '@mui/material';
 import { Button } from '@mui/material';
-
+import HandleRegister from '../../api/HandleRegister';
+import { useHistory } from 'react-router-dom';
+import { Alert } from '@mui/material';
 
 const Register = ()=>{
 
-    const UidBox = RegisterBox('uid');
+    const history = useHistory();
+    const NickNameBox = RegisterBox('nickName');
     const PwBox = RegisterBox('password');
     const RePwBox = RegisterBox('rePassword');
     const EmailBox = RegisterBox('email');
 
-    const [userInput, setUserInput] = useState({uid:"", password:"", rePassword:"", email:""});
-    const [errMsg, setErrMsg] = useState("");
+    const [userInput, setUserInput] = useState({nickName:"", password:"", rePassword:"", email:""});
+    const [msg, setMsg] = useState("");
 
     const handleUserInput = (newObj)=>{
         setUserInput({...userInput, ...newObj});
     }
 
     const handleSubmit = ()=>{
+        // 사용자 입력 check
         const validation = ValidateRegister(userInput);
-      
         if (!validation.status){
-            setErrMsg(validation.msg)
+            setMsg(validation.msg)
             return
         }
+        HandleRegister({userInput}).then((res)=>{
+            if (!res.status){
+                setMsg(res.errMsg);
+                return
+            } else {
+                history.push('/login')
+            }
+        })
     }
 
     return(
-        <div>
+        <div className='register__container'>
             
+            <h2>Sign Up</h2>
+
             {
-                errMsg
-                ? <Alert className='alert__msg' severity={"error"} 
-                    onClick={()=>setErrMsg("")}>
-                    {errMsg}</Alert>
+                msg
+                ? <Alert severity='error' onClick={()=>{setMsg("")}}>{msg}</Alert>
                 : null
-            }    
+            }                  
            
             <div>
-                <UidBox userInput={userInput} handleUserInput={handleUserInput}/>
+                <EmailBox userInput={userInput} handleUserInput={handleUserInput}/>
+                <NickNameBox userInput={userInput} handleUserInput={handleUserInput}/>
                 <PwBox  userInput={userInput} handleUserInput={handleUserInput}/>
                 <RePwBox  userInput={userInput} handleUserInput={handleUserInput}/>
-                <EmailBox userInput={userInput} handleUserInput={handleUserInput}/>
             </div>
             <Button onClick={()=>{handleSubmit()}}>Submit</Button>
         </div>

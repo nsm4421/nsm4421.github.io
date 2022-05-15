@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, child, get } from "firebase/database";
+import { getDatabase, ref, set, child, get, push, update} from "firebase/database";
 import app from './App'
 
 const database = getDatabase(app);
@@ -10,25 +10,41 @@ const _get =  async (url) => {
     .then((snapshot)=>{
       const data = snapshot.val()
       if (data){
-        return {status:'success', data:data}
+        return {status:true, data:data}
       } else {
-        return {status:'failure', message:'No Data Found'}
+        return {status: false, message:'No Data Found'}
       }
     })
     .catch((e)=>{
-      return {status:'failure', message:e}
+      return {status:false, message:e}
     })
-
 }
 
 const _write = async (url, payload) => {
   const dbRef = ref(database, url);
   try {
     await set(dbRef, payload)
-    return {status:'success'}
+    return {status:true}
   } catch {
-    return {status:'failure'}
+    return {status:false}
   }
+}
+
+const _add = async (url, payload)=>{
+    const dbRef = ref(database).toString();
+    return fetch(`${dbRef}/${url}.json`,{
+      method:'POST',
+      body:JSON.stringify(payload)
+    })
+    .then(res=>{
+      console.log(res)
+        if (res.status!=200){
+            return {status:false, msg:res.statusText, code:res.status};
+        }
+        return {status:false}
+    }).catch((e)=>{
+      return {status:false}
+    })
 }
 
 const HandleDB = (action)=>{
@@ -37,6 +53,8 @@ const HandleDB = (action)=>{
       return _get
     case 'write':
       return _write
+    case 'add':
+      return _add
     default:
       return
   }

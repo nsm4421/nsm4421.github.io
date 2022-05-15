@@ -29,20 +29,16 @@ const removeSpecialSymbol = (word)=>{
     return res
 }
 
-const checkUserId = (uid)=>{
+const checkNickName = (nickName)=>{
 
-    if (!uid){
-        return {status:false, msg:'user id is not given'}
+    if (!nickName){
+        return {status:false, msg:'Nickname is not given'}
     }  
     
-    if (uid.length>15 | uid.length<5){
-        return {status:false, msg:'user id length is invalid'}
+    if (nickName.length>15 | nickName.length<5){
+        return {status:false, msg:'Nickname length is invalid'}
     }
     
-    if (!checkContainAlphabetAndNumber(uid)){
-        return {status:false, msg:('user id consist of alphabet and number')}
-    } 
-
     return {status:true}
 
 }
@@ -89,24 +85,27 @@ const checkEmail = (email)=>{
 
 const ValidateRegister = (userInput)=>{
 
-    const chk_uid = checkUserId(userInput.uid)
+    const chk_nickanme = checkNickName(userInput.nickName)
     const chk_password = checkPassword(userInput.password)
     const chk_re_password = checkRePassword(userInput.password, userInput.rePassword)
     const chk_email = checkEmail(userInput.email)
 
-    if (!chk_uid.status){
-        return chk_uid 
-    }
-    if (!chk_password.status){
-        return chk_password
-    }
-    if (!chk_re_password.status){
-        return chk_re_password
-    }
     if (!chk_email.status){
         return chk_email
     }
+
+    if (!chk_password.status){
+        return chk_password
+    }
     
+    if (!chk_re_password.status){
+        return chk_re_password
+    }
+        
+    if (!chk_nickanme.status){
+        return chk_nickanme 
+    }
+
     return {status:true, msg:null}
 };
 

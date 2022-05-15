@@ -1,0 +1,38 @@
+.register__inner__box {
+    display: inline-flex;
+    font-size: 3vmin;
+    width: 80%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.register__inner__label {
+    color: white;
+    margin: 1vmin;
+    padding: 1vmin;
+    width: 20%;
+    font-weight: 800;
+}
+
+.register__inner__input {
+    margin: 1vmin;
+    padding: 1vmin;
+    width: 70%;
+    font-size: 3vmin;
+    outline: none;
+}
+
+.register__inner__input:focus {
+    color: orange;
+}
+
+.register__inner__stick {
+    background-color: white;
+    height: 6vmin;
+    width: 1px;
+}
+
+.alert__box {
+    /* position: absolute; */
+    
+}

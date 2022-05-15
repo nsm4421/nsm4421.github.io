@@ -46,6 +46,8 @@
 .posting__button__box {
     display: flex;
     justify-content: space-around;
+    margin-top: 3vmin;
+    margin-bottom: 1vmin;
 }
 
 .posting__button__box li {
@@ -77,10 +79,6 @@
 .posting__grid__image {
     width: 80%;
     margin: 0;
-}
-
-.posting__show__comment {
-
 }
 
 .posting__hide__comment {
@@ -135,9 +133,30 @@
 }
 
 .posting__comment {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr;
+    row-gap: 5px;
+    column-gap: 5px;
 }
 
+.posting__comment * {
+    padding: 1vmin;
+    margin: 1vmin;
+}
+
+.posting__comment h5{ 
+    font-weight: 800; 
+}
+
+.posting__comment p{
+    color: gainsboro;
+    text-align: left;
+}
+
+.posting__comment span {
+    color: gainsboro;
+    text-align: right;
+}
 
 .posting__comment__button:hover {
     color: orange;

@@ -1,22 +1,12 @@
 import './Nav.css'
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { useEffect, useState } from 'react';
-import WindowStore from '../../store/WindowStore';
+import { getAuth, signOut } from "firebase/auth";
+import UserStore from '../../store/UserStore';
+import app from '../../api/App';
+import { Link } from 'react-router-dom';
 
-const Nav = ({user})=>{
-
-    const logoPath = `${process.env.PUBLIC_URL}/logo.svg`
-    
-    return (
-        <div className='nav__container'>
-            
-            <Logo logoPath = {logoPath}/>
-            
-            <AuthBanner user={user}/>
-
-        </div>
-    )
-}
+const auth = getAuth(app);
 
 const Logo = ({logoPath}) => {
  
@@ -28,24 +18,47 @@ const Logo = ({logoPath}) => {
     )
 }
 
-const AuthBanner = ({user})=>{
+const AuthBanner = ({logined})=>{
 
-    if (user){
+    if (logined){
         return (
-            <ul className='nav__banner'>
-                <li><a href="#">Login</a>z</li>
-                <li><a href="#">Register</a></li>
+            <ul className='nav__banner' onClick={()=>{Logout()}}>
+                <li><Link to="/">Logout</Link></li>
             </ul>
         )
-    }  else {
+    } else {
         return (
             <ul className='nav__banner'>             
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Register</a></li>
+                <li><Link to="login">Login</Link></li>
+                <li><Link to="register">Register</Link></li>
             </ul>
         )
     }
 }
 
+const Logout = ()=>{  
+    signOut(auth).then(() => {
+        console.log("logout")
+        localStorage.clear();
+        console.log("cleared")
+    }).catch((e) => {
+        console.log(e)
+    })  
+}
+
+const Nav = ({logined})=>{
+
+    const logoPath = `${process.env.PUBLIC_URL}/logo.svg`
+      
+    return (
+        <div className='nav__container'>
+            
+            <Logo logoPath = {logoPath}/>
+            
+            <AuthBanner logined={logined}/>
+
+        </div>
+    )
+}
 
 export default Nav;
